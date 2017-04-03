@@ -15,16 +15,16 @@ class Ui_MainWindow(object):
         self.centralWidget = QtWidgets.QWidget(MainWindow)
         self.centralWidget.setObjectName("centralWidget")
         self.addMachine = QtWidgets.QPushButton(self.centralWidget)
-        self.addMachine.setGeometry(QtCore.QRect(60, 30, 91, 41))
+        self.addMachine.setGeometry(QtCore.QRect(60, 70, 91, 41))
         self.addMachine.setObjectName("addMachine")
         self.simraution = QtWidgets.QPushButton(self.centralWidget)
-        self.simraution.setGeometry(QtCore.QRect(60, 110, 91, 41))
+        self.simraution.setGeometry(QtCore.QRect(60, 120, 91, 41))
         self.simraution.setObjectName("simraution")
         self.restart = QtWidgets.QPushButton(self.centralWidget)
-        self.restart.setGeometry(QtCore.QRect(60, 200, 91, 41))
+        self.restart.setGeometry(QtCore.QRect(60, 170, 91, 41))
         self.restart.setObjectName("restart")
         self.motors = QtWidgets.QPushButton(self.centralWidget)
-        self.motors.setGeometry(QtCore.QRect(60, 280, 91, 41))
+        self.motors.setGeometry(QtCore.QRect(60, 220, 91, 41))
         self.motors.setObjectName("motors")
         self.reciver = QtWidgets.QTextEdit(self.centralWidget)
         self.reciver.setGeometry(QtCore.QRect(170, 30, 441, 251))
@@ -60,6 +60,9 @@ class Ui_MainWindow(object):
         self.widget = QtWidgets.QWidget(self.centralWidget)
         self.widget.setGeometry(QtCore.QRect(330, 290, 301, 211))
         self.widget.setObjectName("widget")
+        self.addMachineVrep = QtWidgets.QPushButton(self.centralWidget)
+        self.addMachineVrep.setGeometry(QtCore.QRect(60, 20, 91, 41))
+        self.addMachineVrep.setObjectName("addMachineVrep")
         MainWindow.setCentralWidget(self.centralWidget)
 
         self.retranslateUi(MainWindow)
@@ -76,6 +79,7 @@ class Ui_MainWindow(object):
         self.xAxisleft.setText(_translate("MainWindow", "left"))
         self.xAxisrigh.setText(_translate("MainWindow", "right"))
         self.yAxisup.setText(_translate("MainWindow", "up"))
+        self.addMachineVrep.setText(_translate("MainWindow", "AddMachine"))
 
 
 if __name__ == "__main__":
