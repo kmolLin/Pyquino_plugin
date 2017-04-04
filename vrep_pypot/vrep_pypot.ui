@@ -6,81 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>682</width>
-    <height>517</height>
+    <width>868</width>
+    <height>666</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="addMachine">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>70</y>
-      <width>91</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>add_machine</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="simraution">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>120</y>
-      <width>91</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>stop_simuration</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="restart">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>170</y>
-      <width>91</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>restart_simulation</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="motors">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>220</y>
-      <width>91</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>motors</string>
-    </property>
-   </widget>
-   <widget class="QTextEdit" name="reciver">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>30</y>
-      <width>441</width>
-      <height>251</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="yAxisdown">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>450</y>
+      <x>680</x>
+      <y>280</y>
       <width>91</width>
       <height>61</height>
      </rect>
@@ -102,8 +40,8 @@
    <widget class="QPushButton" name="xAxisleft">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>450</y>
+      <x>560</x>
+      <y>280</y>
       <width>91</width>
       <height>61</height>
      </rect>
@@ -125,8 +63,8 @@
    <widget class="QPushButton" name="xAxisrigh">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>450</y>
+      <x>790</x>
+      <y>280</y>
       <width>91</width>
       <height>61</height>
      </rect>
@@ -148,8 +86,8 @@
    <widget class="QPushButton" name="yAxisup">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>380</y>
+      <x>680</x>
+      <y>200</y>
       <width>91</width>
       <height>61</height>
      </rect>
@@ -168,28 +106,125 @@
      </size>
     </property>
    </widget>
-   <widget class="QWidget" name="widget" native="true">
+   <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>290</y>
-      <width>301</width>
-      <height>211</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="addMachineVrep">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
+      <x>10</x>
       <y>20</y>
-      <width>91</width>
-      <height>41</height>
+      <width>541</width>
+      <height>571</height>
      </rect>
     </property>
-    <property name="text">
-     <string>AddMachine</string>
-    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QPushButton" name="addMachineVrep">
+           <property name="text">
+            <string>AddMachine</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="motors">
+           <property name="text">
+            <string>motors</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="addMachine">
+           <property name="text">
+            <string>add_machine</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="restart">
+           <property name="text">
+            <string>restart_simulation</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="simraution">
+           <property name="text">
+            <string>stop_simuration</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QTableWidget" name="motorTable">
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <property name="verticalScrollMode">
+          <enum>QAbstractItemView::ScrollPerPixel</enum>
+         </property>
+         <property name="horizontalScrollMode">
+          <enum>QAbstractItemView::ScrollPerPixel</enum>
+         </property>
+         <attribute name="horizontalHeaderDefaultSectionSize">
+          <number>75</number>
+         </attribute>
+         <attribute name="horizontalHeaderMinimumSectionSize">
+          <number>75</number>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>ID</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Name</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Position</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Limitation</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="updataButton">
+         <property name="text">
+          <string>Send</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QTextEdit" name="reciver"/>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>

@@ -4,14 +4,12 @@
 Module implementing MainWindow.
 """
 
-from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
 
 from Ui_vrep_pypot import Ui_MainWindow
 
 from pypot.vrep import from_vrep
-
-import random
 import matplotlib
 # Make sure that we are using QT5
 import json
@@ -41,15 +39,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         
         
     def __addMachine__(self):
-       # self.poppy = PoppyHumanoid(simulator='vrep')  ##這行我在想有沒有別的辦法可以改  poppy_ergo_jr.json  poppy_ergo_jr.ttt testfile2.ttt  config.json
-       with open('config.json') as f:
-        config = json.load(f)
-        print(config)
-        self.simula_robot = from_vrep(config, '127.0.0.1', 19997, 'testfile2.ttt')  #讀取檔案
-        
+        # self.poppy = PoppyHumanoid(simulator='vrep')  ##這行我在想有沒有別的辦法可以改  poppy_ergo_jr.json  poppy_ergo_jr.ttt testfile2.ttt  config.json
+        with open('poppy_humanoid.json') as f:
+            self.config = json.load(f)
+            self.simula_robot = from_vrep(self.config, '127.0.0.1', 19997, 'poppy_humanoid.ttt')  #讀取檔案
+        self.updateMotorTable()
         
     def __motorsDetail__(self):
-        {m.name: m.present_position for m in self.simula_robot.motors  }
+        {m.name: m.present_position for m in self.simula_robot.motors}
         #print("name", name, "present_position", present_position)
         
         print('test')
@@ -70,7 +67,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
      
     def __motors__(self):
         self.reciver.insertPlainText(str(self.simula_robot.motors))
-        print(len(self.simula_robot.motors))
+        for e in self.simula_robot.motors:
+            #print(type(e))
+            print(e.name, e.id, e.present_position)
+        print(type(self.simula_robot.motors))
+        #print(len(self.simula_robot.motors))
   
     def __test__send(self):
         
@@ -78,6 +79,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         
     def __restart_simulation__(self):
         self.simula_robot.reset_simulation()
+        self.updateMotorTable()
         print("restart_simulation")
         
     def __draw__(self):
@@ -85,29 +87,55 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         reached_pos=[]
         for m in self.simula_robot.tip:
             m.goto_behavior = 'minjerk'
-            print(m)
-            
-
-        # We generate 25 random arm configuration
-        # and stores the reached position of the forearm
-        for _ in range(10):
-            #self.poppy.reset_simulation()
-            
-            # Generate a position by setting random position (within the angle limit) to each joint
-            # This can be hacked to define other exploration
+        
+        for _ in range(1):
             #print(min(m.angle_limit),max(m.angle_limit) )
-            
-            pos = {m.name: random.randint(180, 360) for m in self.simula_robot.tip}    
+            names = [e.name for e in self.simula_robot.tip]
+            #print(names)
+            currentPositions = [e.present_position for e in self.simula_robot.tip]
+            positions = [currentPositions[0]+10, currentPositions[1]+10, currentPositions[2]+10]
+            pos = dict(zip(names, positions))
             self.simula_robot.goto_position(pos, 2., wait=True)
             reached_pt.append(self.simula_robot.get_object_position)
             reached_pos.append(pos)
             #reached_pt.append(self.simula_robot.get_object_position('l_forearm_visual'))
+        self.updateMotorTable()
             
-        print(reached_pt)
-        #print(reached_pos, end='\n')
-            
+        #print(reached_pt)
+
+    def updateMotorTable(self):
+        if hasattr(self, 'simula_robot'):
+            source = {e.id:[e.name, e.present_position] for e in self.simula_robot.motors}
+            lables = sorted(list(source.keys()))
+            for i in lables:
+                pos = lables.index(i)
+                e = source[i]
+                table = self.motorTable
+                if table.rowCount()!=len(self.simula_robot.motors):
+                    for k in range(len(self.simula_robot.motors)): table.insertRow(k)
+                table.setItem(pos, 0, QTableWidgetItem(str(i)))
+                table.setItem(pos, 1, QTableWidgetItem(e[0]))
+                present_position = QDoubleSpinBox()
+                present_position.setMaximum(720)
+                present_position.setMinimum(-720)
+                present_position.setValue(e[1])
+                table.setCellWidget(pos, 2, present_position)
+                minimum = self.config['motors'][e[0]]['angle_limit'][0]
+                maximum = self.config['motors'][e[0]]['angle_limit'][1]
+                table.setItem(pos, 3, QTableWidgetItem("{}, {}".format(minimum, maximum)))
+    
+    def closeEvent(self, event):
+        self.__close_vrep__()
     
     def __close_vrep__(self):
         self.simula_robot.stop_simulation()
         print("close")
-        
+    
+    @pyqtSlot()
+    def on_updataButton_clicked(self):
+        table = self.motorTable
+        names = [table.item(i, 1).text() for i in range(table.rowCount())]
+        positions = [table.cellWidget(i, 2).value() for i in range(table.rowCount())]
+        pos = dict(zip(names, positions))
+        print(pos)
+        self.simula_robot.goto_position(pos, 2., 'minjerk', wait=True)
