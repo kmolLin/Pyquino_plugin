@@ -70,7 +70,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         for e in self.simula_robot.motors:
             #print(type(e))
             print(e.name, e.id, e.present_position)
-        print(type(self.simula_robot.motors))
+        #print(type(self.simula_robot.motors))
         #print(len(self.simula_robot.motors))
   
     def __test__send(self):
