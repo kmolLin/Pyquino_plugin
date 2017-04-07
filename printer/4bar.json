@@ -1,0 +1,30 @@
+{
+  "controllers": {
+    "my_dxl_controller": {
+      "sync_read": true,
+      "protocol": 2,
+      "attached_motors": [
+        "base"
+      ],
+      "port": "/dev/ttyAMA0",
+      "syncloop": "LightDxlController"
+    }
+  },
+  "motorgroups": {
+    "base": [
+      "motor"
+    ]
+  },
+  "motors": {
+    "motor": {
+      "offset": 0.0,
+      "type": "XL-320",
+      "id": 1,
+      "angle_limit": [
+        -90.0,
+        90.0
+      ],
+      "orientation": "direct"
+    }
+  }
+}
