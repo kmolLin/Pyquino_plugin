@@ -9,8 +9,18 @@ from PyQt5.QtWidgets import *
 
 from Ui_vrep_pypot import Ui_MainWindow
 
-from pypot.vrep import from_vrep
+#from kernel.pypot.vrep import from_vrep
+from kernel.customize import from_vrep
+from kernel.pypot.vrep.io import VrepIO
+
 import matplotlib
+matplotlib.use('Qt5Agg')
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
+from matplotlib_Dialog import matplotlib_show, MyMplCanvas
+
+
+
 # Make sure that we are using QT5
 import json
 
@@ -19,12 +29,10 @@ import json
 class MainWindow(QMainWindow, Ui_MainWindow):
     
     def __init__(self, parent=None):
-        
         super(MainWindow, self).__init__(parent)
         self.setupUi(self)
         self.initForms()
-        
-        
+    
     def initForms(self):
         
         self.addMachine.clicked.connect(self.__test__send)
@@ -40,10 +48,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         
     def __addMachine__(self):
         # self.poppy = PoppyHumanoid(simulator='vrep')  ##這行我在想有沒有別的辦法可以改  poppy_ergo_jr.json  poppy_ergo_jr.ttt testfile2.ttt  config.json
-        with open('poppy_humanoid.json') as f:
-            self.config = json.load(f)
-            self.simula_robot = from_vrep(self.config, '127.0.0.1', 19997, 'poppy_humanoid.ttt')  #讀取檔案
-        self.updateMotorTable()
+        filename, _ = QFileDialog.getOpenFileName(self, caption="Open json config")
+        if filename:
+            fi = QFileInfo(filename).baseName()
+            with open(fi+'.json') as f:
+                self.config = json.load(f)
+                #ttt = QFileDialog.getOpenFileName(self, caption="Open ttt file")
+                self.simula_robot = from_vrep(self.config, '127.0.0.1', 19997, fi+'.ttt')  #讀取檔案
+            self.updateMotorTable()
+        
         
     def __motorsDetail__(self):
         {m.name: m.present_position for m in self.simula_robot.motors}
@@ -81,8 +94,28 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.simula_robot.reset_simulation()
         self.updateMotorTable()
         print("restart_simulation")
+    
+    @pyslot(float)
+    def update_motor_force(self):
         
+        getfilename = self.simula_robot.get_motor_force('m1')
+    
     def __draw__(self):
+        
+        timer = QTimer(self)
+        timer.timeout.connect(self.update_motor_force)
+        timer.start(1000)
+        
+        getfilename = self.simula_robot.get_motor_force('m1')
+        #currenttime = self.simula_robot.current_simulation_time()
+        print(getfilename, type(getfilename))
+        dlg = matplotlib_show(self)
+        dlg.dc.update_figure(getfilename)
+        if dlg.exec_(): pass
+        
+        
+        '''
+        ##this is to do range to run the point
         reached_pt = []
         reached_pos=[]
         for m in self.simula_robot.tip:
@@ -102,6 +135,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.updateMotorTable()
             
         #print(reached_pt)
+        '''
 
     def updateMotorTable(self):
         if hasattr(self, 'simula_robot'):
@@ -128,8 +162,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.__close_vrep__()
     
     def __close_vrep__(self):
-        self.simula_robot.stop_simulation()
-        print("close")
+        try:
+            self.simula_robot.stop_simulation()
+            print("close")
+        except:
+            print("no close")
     
     @pyqtSlot()
     def on_updataButton_clicked(self):

@@ -12,11 +12,11 @@
   },
   "motorgroups": {
     "base": [
-      "m1"
+      "motor"
     ]
   },
   "motors": {
-    "m1": {
+    "motor": {
       "offset": 0.0,
       "type": "XL-320",
       "id": 1,

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Y:\eric6_workspace\Pyquino_plugin\vrep_pypot\vrep_pypot.ui'
+# Form implementation generated from reading ui file '/home/kmol/桌面/Pyquino_plugin/vrep_pypot/vrep_pypot.ui'
 #
-# Created by: PyQt5 UI code generator 5.7
+# Created by: PyQt5 UI code generator 5.7.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -11,32 +11,32 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(868, 666)
+        MainWindow.resize(967, 666)
         self.centralWidget = QtWidgets.QWidget(MainWindow)
         self.centralWidget.setObjectName("centralWidget")
         self.yAxisdown = QtWidgets.QPushButton(self.centralWidget)
-        self.yAxisdown.setGeometry(QtCore.QRect(680, 280, 91, 61))
+        self.yAxisdown.setGeometry(QtCore.QRect(570, 370, 91, 61))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("../../Pyquino/core/icon/arrow-down-b.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.yAxisdown.setIcon(icon)
         self.yAxisdown.setIconSize(QtCore.QSize(30, 30))
         self.yAxisdown.setObjectName("yAxisdown")
         self.xAxisleft = QtWidgets.QPushButton(self.centralWidget)
-        self.xAxisleft.setGeometry(QtCore.QRect(560, 280, 91, 61))
+        self.xAxisleft.setGeometry(QtCore.QRect(570, 450, 91, 61))
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap("../../Pyquino/core/icon/arrow-left-b.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.xAxisleft.setIcon(icon1)
         self.xAxisleft.setIconSize(QtCore.QSize(30, 30))
         self.xAxisleft.setObjectName("xAxisleft")
         self.xAxisrigh = QtWidgets.QPushButton(self.centralWidget)
-        self.xAxisrigh.setGeometry(QtCore.QRect(790, 280, 91, 61))
+        self.xAxisrigh.setGeometry(QtCore.QRect(570, 190, 91, 61))
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap("../../Pyquino/core/icon/arrow-right-b.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.xAxisrigh.setIcon(icon2)
         self.xAxisrigh.setIconSize(QtCore.QSize(30, 30))
         self.xAxisrigh.setObjectName("xAxisrigh")
         self.yAxisup = QtWidgets.QPushButton(self.centralWidget)
-        self.yAxisup.setGeometry(QtCore.QRect(680, 200, 91, 61))
+        self.yAxisup.setGeometry(QtCore.QRect(570, 280, 91, 61))
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap("../../Pyquino/core/icon/arrow-up-b.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.yAxisup.setIcon(icon3)
@@ -96,7 +96,23 @@ class Ui_MainWindow(object):
         self.reciver = QtWidgets.QTextEdit(self.verticalLayoutWidget)
         self.reciver.setObjectName("reciver")
         self.verticalLayout_2.addWidget(self.reciver)
+        self.verticalLayoutWidget_2 = QtWidgets.QWidget(self.centralWidget)
+        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(670, 20, 241, 221))
+        self.verticalLayoutWidget_2.setObjectName("verticalLayoutWidget_2")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_2)
+        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
         MainWindow.setCentralWidget(self.centralWidget)
+        self.menuBar = QtWidgets.QMenuBar(MainWindow)
+        self.menuBar.setGeometry(QtCore.QRect(0, 0, 967, 23))
+        self.menuBar.setObjectName("menuBar")
+        self.menuOpenfile = QtWidgets.QMenu(self.menuBar)
+        self.menuOpenfile.setObjectName("menuOpenfile")
+        MainWindow.setMenuBar(self.menuBar)
+        self.actionOpen = QtWidgets.QAction(MainWindow)
+        self.actionOpen.setObjectName("actionOpen")
+        self.menuOpenfile.addAction(self.actionOpen)
+        self.menuBar.addAction(self.menuOpenfile.menuAction())
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -105,7 +121,7 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.yAxisdown.setText(_translate("MainWindow", "back"))
-        self.xAxisleft.setText(_translate("MainWindow", "left"))
+        self.xAxisleft.setText(_translate("MainWindow", "getforce"))
         self.xAxisrigh.setText(_translate("MainWindow", "right"))
         self.yAxisup.setText(_translate("MainWindow", "up"))
         self.addMachineVrep.setText(_translate("MainWindow", "AddMachine"))
@@ -122,6 +138,8 @@ class Ui_MainWindow(object):
         item = self.motorTable.horizontalHeaderItem(3)
         item.setText(_translate("MainWindow", "Limitation"))
         self.updataButton.setText(_translate("MainWindow", "Send"))
+        self.menuOpenfile.setTitle(_translate("MainWindow", "file"))
+        self.actionOpen.setText(_translate("MainWindow", "open"))
 
 
 if __name__ == "__main__":
