@@ -6,6 +6,7 @@ Module implementing MainWindow.
 
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
 
 from Ui_vrep_pypot import Ui_MainWindow
 
@@ -17,8 +18,9 @@ import matplotlib
 matplotlib.use('Qt5Agg')
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
-from matplotlib_Dialog import matplotlib_show, MyMplCanvas
+from matplotlib_Dialog import MyMplCanvas
 
+import time ,  math
 
 
 # Make sure that we are using QT5
@@ -35,6 +37,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def initForms(self):
         
+        self.globaltime = 500
+        
         self.addMachine.clicked.connect(self.__test__send)
         self.simraution.clicked.connect(self.__close_vrep__)
         self.restart.clicked.connect(self.__restart_simulation__)
@@ -43,8 +47,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.xAxisleft.clicked.connect(self.__draw__)
         self.xAxisrigh.clicked.connect(self.__motorsDetail__)
         self.addMachineVrep.clicked.connect(self. __addMachine__)
-        
-        
+        self.motorTable.cellChanged.connect(self.draw_motorforce)
+        self.dc = MyMplCanvas(self, width=5, height=4, dpi=100)
+        self.mainLayout.insertWidget(1, self.dc)
         
     def __addMachine__(self):
         # self.poppy = PoppyHumanoid(simulator='vrep')  ##這行我在想有沒有別的辦法可以改  poppy_ergo_jr.json  poppy_ergo_jr.ttt testfile2.ttt  config.json
@@ -56,6 +61,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 #ttt = QFileDialog.getOpenFileName(self, caption="Open ttt file")
                 self.simula_robot = from_vrep(self.config, '127.0.0.1', 19997, fi+'.ttt')  #讀取檔案
             self.updateMotorTable()
+    
+    @pyqtSlot(int, int)
+    def draw_motorforce(self, row, column):
+        if column==4 and row==self.motorname.currentIndex():
+            print(self.motorTable.item(row, column).text())
+            
+            
         
         
     def __motorsDetail__(self):
@@ -67,16 +79,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
      
     def __gotoPosition__(self):
         
-        #self.simula_robot.m1.goto_position(45, 2, wait=False)
-        
-        self.simula_robot.m1.goto_position(45, 10, 'minjerk' ,wait=True)
-        self.simula_robot.m6.goto_position(30, 10, 'minjerk' ,wait=True)
-        self.simula_robot.m1.goto_position(0, 10,'minjerk' , wait=True)
-        self.simula_robot.m6.goto_position(20, 10, 'minjerk' ,wait=True)
-        
-        #self.simula_robot.m3.goto_position(45, 10, wait=False)
-        #self.simula_robot.m3.goto_position(0, 2, wait=True)
-        
+        current = []
+        self.simula_robot.goto_position({self.motorname.currentText(): self.motorTable.cellWidget(self.motorname.currentIndex(),2).value()},  10, 'minjerk', wait=False)
+        for second in range(0, self.globaltime, 4):
+            current.append(math.degrees(self.simula_robot.get_motor_position(self.motorname.currentText())))
+            time.sleep(0.04)
+            
+        self.current = current
+        print(self.current)
+        self.times = [i/100 for i in range(0, 500, 4)]
+
+
      
     def __motors__(self):
         self.reciver.insertPlainText(str(self.simula_robot.motors))
@@ -95,52 +108,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.updateMotorTable()
         print("restart_simulation")
     
-    @pyslot(float)
-    def update_motor_force(self):
-        
-        getfilename = self.simula_robot.get_motor_force('m1')
-    
     def __draw__(self):
-        
-        timer = QTimer(self)
-        timer.timeout.connect(self.update_motor_force)
-        timer.start(1000)
-        
-        getfilename = self.simula_robot.get_motor_force('m1')
+        #getfilename = self.simula_robot.get_motor_force('m1')
         #currenttime = self.simula_robot.current_simulation_time()
-        print(getfilename, type(getfilename))
-        dlg = matplotlib_show(self)
-        dlg.dc.update_figure(getfilename)
-        if dlg.exec_(): pass
-        
-        
-        '''
-        ##this is to do range to run the point
-        reached_pt = []
-        reached_pos=[]
-        for m in self.simula_robot.tip:
-            m.goto_behavior = 'minjerk'
-        
-        for _ in range(1):
-            #print(min(m.angle_limit),max(m.angle_limit) )
-            names = [e.name for e in self.simula_robot.tip]
-            #print(names)
-            currentPositions = [e.present_position for e in self.simula_robot.tip]
-            positions = [currentPositions[0]+10, currentPositions[1]+10, currentPositions[2]+10]
-            pos = dict(zip(names, positions))
-            self.simula_robot.goto_position(pos, 2., wait=True)
-            reached_pt.append(self.simula_robot.get_object_position)
-            reached_pos.append(pos)
-            #reached_pt.append(self.simula_robot.get_object_position('l_forearm_visual'))
-        self.updateMotorTable()
-            
-        #print(reached_pt)
-        '''
+        #print(getfilename, type(getfilename))
+        print(len(self.times),len(self.current) )
+        self.dc.update_figure(self.times, self.current)
 
     def updateMotorTable(self):
         if hasattr(self, 'simula_robot'):
             source = {e.id:[e.name, e.present_position] for e in self.simula_robot.motors}
             lables = sorted(list(source.keys()))
+            if self.motorname.count()==0:
+                for i in lables: self.motorname.addItem(source[i][0])
             for i in lables:
                 pos = lables.index(i)
                 e = source[i]
@@ -157,6 +137,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 minimum = self.config['motors'][e[0]]['angle_limit'][0]
                 maximum = self.config['motors'][e[0]]['angle_limit'][1]
                 table.setItem(pos, 3, QTableWidgetItem("{}, {}".format(minimum, maximum)))
+                table.setItem(pos, 4, QTableWidgetItem('{}'.format(self.simula_robot.get_motor_force(e[0]))))
     
     def closeEvent(self, event):
         self.__close_vrep__()
@@ -174,5 +155,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         names = [table.item(i, 1).text() for i in range(table.rowCount())]
         positions = [table.cellWidget(i, 2).value() for i in range(table.rowCount())]
         pos = dict(zip(names, positions))
-        print(pos)
-        self.simula_robot.goto_position(pos, 2., 'minjerk', wait=True)
+        
+        self.simula_robot.goto_position(pos, 5, 'minjerk', wait=False)
+        self.updateMotorTable()
+        
+        current = []
+        #self.simula_robot.goto_position({self.motorname.currentText(): self.motorTable.cellWidget(self.motorname.currentIndex(),2).value()},  10, 'minjerk', wait=False)
+        for second in range(0, self.globaltime, 4):
+            current.append(math.degrees(self.simula_robot.get_motor_position(self.motorname.currentText())))
+            time.sleep(0.04)
+            
+        self.current = current
+        #print(self.current)
+        self.times = [i/100 for i in range(0, 500, 4)]
+        #print(pos)
+

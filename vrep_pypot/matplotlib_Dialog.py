@@ -29,28 +29,21 @@ class MyMplCanvas(FigureCanvas):
     def __init__(self, parent=None, width=5, height=4, dpi=100):
         fig = Figure(figsize=(width, height), dpi=dpi)
         self.axes = fig.add_subplot(111)
-        self.compute_initial_figure()
         FigureCanvas.__init__(self, fig)
         self.setParent(parent)
-        FigureCanvas.setSizePolicy(self, QSizePolicy.Expanding, QSizePolicy.Expanding)
+        FigureCanvas.setSizePolicy(self, QSizePolicy.Expanding, QSizePolicy.Fixed)
         FigureCanvas.updateGeometry(self)
     
-    def compute_initial_figure(self):
-        self.axes.plot([0, 1, 2, 3], [1, 2, 0, 4], 'r')
+
     
     @pyqtSlot(float)
-    def update_figure(self, x):
+    def update_figure(self,t0,x):
         # Build a list of 4 random integers between 0 and 10 (both inclusive)
         #l = [random.randint(0, 10) for i in range(4)]
         self.axes.cla()
-        self.axes.plot([0], [x], 'r')
+        self.axes.plot(t0,x)
         self.draw()
     
-    def updateTable(self, x, y):
-        self.x = x
-        
-        print(x, y)
-        return(x+y)
 
 '''
 class MyStaticMplCanvas(MyMplCanvas):
@@ -81,14 +74,3 @@ class MyDynamicMplCanvas(MyMplCanvas):
         self.axes.plot([0, 1, 2, 3], l, 'r')
         self.draw()
 '''
-
-
-
-class matplotlib_show(QDialog, Ui_Dialog):
-    def __init__(self, parent=None):
-        super(matplotlib_show, self).__init__(parent)
-        self.setupUi(self)
-        #sc = MyStaticMplCanvas(self, width=5, height=4, dpi=100)
-        self.dc = MyMplCanvas(self, width=5, height=4, dpi=100)
-        #self.verticalLayout.insertWidget(0, sc)
-        self.verticalLayout.insertWidget(0, self.dc)

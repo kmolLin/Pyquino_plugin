@@ -6,244 +6,237 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>967</width>
-    <height>666</height>
+    <width>621</width>
+    <height>730</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>621</width>
+    <height>730</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="yAxisdown">
-    <property name="geometry">
-     <rect>
-      <x>570</x>
-      <y>370</y>
-      <width>91</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>back</string>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>../../Pyquino/core/icon/arrow-down-b.png</normaloff>../../Pyquino/core/icon/arrow-down-b.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>30</width>
-      <height>30</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="xAxisleft">
-    <property name="geometry">
-     <rect>
-      <x>570</x>
-      <y>450</y>
-      <width>91</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>getforce</string>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>../../Pyquino/core/icon/arrow-left-b.png</normaloff>../../Pyquino/core/icon/arrow-left-b.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>30</width>
-      <height>30</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="xAxisrigh">
-    <property name="geometry">
-     <rect>
-      <x>570</x>
-      <y>190</y>
-      <width>91</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>right</string>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>../../Pyquino/core/icon/arrow-right-b.png</normaloff>../../Pyquino/core/icon/arrow-right-b.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>30</width>
-      <height>30</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="yAxisup">
-    <property name="geometry">
-     <rect>
-      <x>570</x>
-      <y>280</y>
-      <width>91</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>up</string>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>../../Pyquino/core/icon/arrow-up-b.png</normaloff>../../Pyquino/core/icon/arrow-up-b.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>30</width>
-      <height>30</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QWidget" name="verticalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>541</width>
-      <height>571</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <widget class="QPushButton" name="addMachineVrep">
-           <property name="text">
-            <string>AddMachine</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="motors">
-           <property name="text">
-            <string>motors</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="addMachine">
-           <property name="text">
-            <string>add_machine</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="restart">
-           <property name="text">
-            <string>restart_simulation</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="simraution">
-           <property name="text">
-            <string>stop_simuration</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QTableWidget" name="motorTable">
-         <property name="editTriggers">
-          <set>QAbstractItemView::NoEditTriggers</set>
-         </property>
-         <property name="selectionBehavior">
-          <enum>QAbstractItemView::SelectRows</enum>
-         </property>
-         <property name="verticalScrollMode">
-          <enum>QAbstractItemView::ScrollPerPixel</enum>
-         </property>
-         <property name="horizontalScrollMode">
-          <enum>QAbstractItemView::ScrollPerPixel</enum>
-         </property>
-         <attribute name="horizontalHeaderDefaultSectionSize">
-          <number>75</number>
-         </attribute>
-         <attribute name="horizontalHeaderMinimumSectionSize">
-          <number>75</number>
-         </attribute>
-         <column>
+   <layout class="QVBoxLayout" name="mainLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QPushButton" name="addMachineVrep">
           <property name="text">
-           <string>ID</string>
+           <string>AddMachine</string>
           </property>
-         </column>
-         <column>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="motors">
           <property name="text">
-           <string>Name</string>
+           <string>motors</string>
           </property>
-         </column>
-         <column>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="addMachine">
           <property name="text">
-           <string>Position</string>
+           <string>add_machine</string>
           </property>
-         </column>
-         <column>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="restart">
           <property name="text">
-           <string>Limitation</string>
+           <string>restart_simulation</string>
           </property>
-         </column>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="updataButton">
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="simraution">
+          <property name="text">
+           <string>stop_simuration</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="motorname"/>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="motorTable">
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectRows</enum>
+        </property>
+        <property name="verticalScrollMode">
+         <enum>QAbstractItemView::ScrollPerPixel</enum>
+        </property>
+        <property name="horizontalScrollMode">
+         <enum>QAbstractItemView::ScrollPerPixel</enum>
+        </property>
+        <attribute name="horizontalHeaderDefaultSectionSize">
+         <number>75</number>
+        </attribute>
+        <attribute name="horizontalHeaderMinimumSectionSize">
+         <number>75</number>
+        </attribute>
+        <column>
          <property name="text">
-          <string>Send</string>
+          <string>ID</string>
          </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <widget class="QTextEdit" name="reciver"/>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="verticalLayoutWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>670</x>
-      <y>20</y>
-      <width>241</width>
-      <height>221</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_3"/>
-   </widget>
+        </column>
+        <column>
+         <property name="text">
+          <string>Name</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Position</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Limitation</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Force</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QPushButton" name="updataButton">
+          <property name="text">
+           <string>Send</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="xAxisleft">
+          <property name="text">
+           <string>getforce</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>../../../Pyquino/core/icon/arrow-left-b.png</normaloff>../../../Pyquino/core/icon/arrow-left-b.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>30</width>
+            <height>30</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="xAxisrigh">
+          <property name="text">
+           <string>right</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>../../../Pyquino/core/icon/arrow-right-b.png</normaloff>../../../Pyquino/core/icon/arrow-right-b.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>30</width>
+            <height>30</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="yAxisup">
+          <property name="text">
+           <string>up</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>../../../Pyquino/core/icon/arrow-up-b.png</normaloff>../../../Pyquino/core/icon/arrow-up-b.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>30</width>
+            <height>30</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="yAxisdown">
+          <property name="text">
+           <string>back</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>../../../Pyquino/core/icon/arrow-down-b.png</normaloff>../../../Pyquino/core/icon/arrow-down-b.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>30</width>
+            <height>30</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QTextEdit" name="reciver">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>967</width>
+     <width>621</width>
      <height>23</height>
     </rect>
    </property>
